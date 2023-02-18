@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public struct Currency
 {
@@ -36,7 +37,7 @@ public struct Currency
 
     public override string ToString()
     {
-        int digitsFrom = (int)Math.Floor(Math.Log(value) / 3);
-        return Math.Round(value / Math.Pow(10, digitsFrom * 3)).ToString() + ((char)(digitsFrom + 97)).ToString();
+        int digitsFrom = (int)Math.Floor(Math.Floor(Math.Log(value, 10)) / 3);
+        return SMath.RoundToDigits(value / Math.Pow(10, (digitsFrom * 3)), 3).ToString() + ((char)(digitsFrom + 97)).ToString();
     }
 }
