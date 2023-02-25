@@ -61,7 +61,12 @@ public class Player : MonoBehaviour
 
     private void SelectObject(Selectable s)
     {
+        s.Select();
+    }
 
+    private void DeselectObject()
+    {
+        Selectable.CurrentlySelected.Deselect();
     }
 
     #region Windows Specific Code
@@ -71,9 +76,16 @@ public class Player : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(_camera.ScreenToWorldPoint(Input.mousePosition), Vector3.forward);
 
-            if (hit.collider.gameObject.tag == "Selectable")
+            if (hit.collider != null)
             {
-                SelectObject(hit.collider.gameObject.GetComponent<Selectable>());
+                if (hit.collider.gameObject.tag == "Selectable")
+                {
+                    SelectObject(hit.collider.gameObject.GetComponent<Selectable>());
+                }
+            }
+            else if (Selectable.CurrentlySelected != null)
+            {
+                DeselectObject();
             }
         }
     }

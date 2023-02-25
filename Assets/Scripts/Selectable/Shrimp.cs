@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shrimp : MonoBehaviour
+public class Shrimp : Selectable
 {
     public float Power;
     public int Size;
@@ -10,8 +10,13 @@ public class Shrimp : MonoBehaviour
 
     public float Value => Power * Size;
 
-    private void Awake()
+    protected override void _Awake()
     {
         CurrentStation = null;
+    }
+
+    protected override void _Select()
+    {
+
     }
 }

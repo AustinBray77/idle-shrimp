@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Station : MonoBehaviour
+public class Station : Selectable
 {
     public Shrimp WorkingShrimp;
     public float MinimumPowerRequirement;
     public float BaseStationWorkTime;
     public double BaseValue;
 
-    private void Awake()
+    protected override void _Awake()
     {
         WorkingShrimp = null;
+        StartCoroutine(Work());
     }
 
     public bool AssignShrimp(Shrimp s)
@@ -35,8 +36,14 @@ public class Station : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitUntil(() => WorkingShrimp != null);
             Player.AddCoins(BaseValue * WorkingShrimp.Value);
             yield return new WaitForSeconds(BaseStationWorkTime / (WorkingShrimp.Power * WorkingShrimp.Size));
         }
+    }
+
+    protected override void _Select()
+    {
+
     }
 }
